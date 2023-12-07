@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Authors{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-6" style="margin-top:80px" >
+    <h2>Authors</h2>
+    <div class="row">
+      {% for author in authors %}
+      <div class="col-md-4 mb-4 d-flex" id="customContainer">
+          <div class="card">
+            <img src="{{ author.image.url }}" class="card-img-top img-thumbnail" alt="{{ author.name }}">
+            <div class="card-body text-center">
+              <h5 class="card-title">{{ author.name }} {{ author.last_name }}</h5>
+              <a href="{% url 'author_posts' author.id %}" class="btn btn-primary">Postlar</a>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <h2 class="text-center text-muted">
+            Mualliflar mavjud emas
+        </h2>
+      {% endfor %}
+    </div>
+  </div>
+
+{% endblock content %}
+

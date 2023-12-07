@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}
+Kategoriya
+{% endblock title %}
+
+{% block content %}
+<!-- Categories -->
+<div class="container mt-5" style="margin-top:150px">
+    {% if categories %}
+    <h2>Kategoriyalar</h2>
+    <div class="row">
+        {% if not category %}
+        <div class="col-md-4" id="customContainer">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="" class="category-link active" >all</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-4" id="customContainer">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url "category_view" category_id=0 %}" class="category-link" >all</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% for c in categories %}
+        <div class="col-md-4" id="customContainer">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url "category_view" c.id %}"
+                        {% if c.id == category.id %} class="category-link active"
+                        {% else %}class="category-link" 
+                        {% endif %}
+                        data-category-id="{{ c.id }}">{{ c.name }}</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h2>Kategoriyalar mavjud emas</h2>
+    {% endif %}
+</div>
+
+
+
+
+  <!-- Posts -->
+  <div class="container mt-5">
+    {% if posts %}
+    <h2>Mavjud Postlar</h2>
+    <div class="row">
+     {% for post in posts %}
+     <div class="col-md-4 mb-4 d-flex" id="customContainer">
+        <div class="card">
+          <img src="{{post.image.url}}" class="card-img-top" alt="Sample Image">
+          <div class="card-body">
+            <h5 class="card-title"><pre>{{post.title}}</pre></h5>
+            <p class="card-text">{{post.text|slice:":20"}}... <a href="">read more</a>
+            </p>
+          </div>
+          <div class="card-footer text-muted">
+            <small>
+                <i class="bi bi-calendar-event"></i> {{ post.reg_date|date:"F d, Y " }}| {{post.reg_date|date:"H:i"}} <i class="bi bi-clock"></i> 
+            </small>
+        </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <h2>Hozircha postlar mavjud emas</h2>
+    {% endif %}
+  </div>
+{% endblock content %}

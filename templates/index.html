@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Bosh sahifa{% endblock title %}
+
+{% block content %}
+
+<style>
+    .category-link:hover {
+        color: #007bff; /* Change the color for the hover effect */
+        text-decoration: underline; /* Add underline on hover */
+    }
+
+    .category-link.active {
+        font-weight: bold; /* Change the font weight for the active effect */
+        color: #28a745; /* Change the color for the active effect */
+    }
+    #customContainer:hover {
+        transition: background-color 0.3s ease; 
+        box-shadow: rgba(0, 0, 0, 0.1);
+    }
+</style>
+{% if events %}
+<header class="jumbotron text-center">
+    <div class="container mt-5">
+        <div id="eventsCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                {% for event in events %}
+                    <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <div class="d-flex flex-column align-items-center">
+                            <img src="{{ event.image.url }}" class="d-block mx-auto w-100" style="max-width: 500px; height: auto;" alt="{{ event.title }}">
+                            <div class="text-center">
+                                <h5>{{ event.title }}</h5>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#eventsCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#eventsCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+</header>
+{% endif %}
+
+
+
+
+<!-- Categories -->
+<div class="container mt-6" style="margin-top:150px">
+    {% if categories %}
+    <h2>Kategoriyalar</h2>
+    <div class="row">
+        {% if not category %}
+        <div class="col-md-4" id="customContainer">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="" class="category-link active" >all</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-4" id="customContainer">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url "category_view" category_id=0 %}" class="category-link" >all</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% for c in categories %}
+        <div class="col-md-4" id="customContainer">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <a href="{% url "category_view" c.id %}"
+                        {% if c.id == category.id %} class="category-link active"
+                        {% else %}class="category-link" 
+                        {% endif %}
+                        data-category-id="{{ c.id }}">{{ c.name }}</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <h2>Kategoriyalar mavjud emas</h2>
+    {% endif %}
+</div>
+
+
+
+
+  <!-- Posts -->
+  <div class="container mt-6" style="margin-top:50px">
+    {% if posts %}
+    <h2>Latest Posts</h2>
+    <div class="row">
+     {% for post in posts %}
+      <div class="col-md-4 mb-4 d-flex" id="customContainer">
+        <div class="card">
+          <img src="{{post.image.url}}" class="card-img-top" alt="Sample Image">
+          <div class="card-body">
+            <h5 class="card-title"><pre>{{post.title}}</pre></h5>
+            <p class="card-text">{{post.text|slice:":20"}}... <a href="{% url "post_detail" post.id %}">read more</a>
+            </p>
+          </div>
+          <div class="card-footer text-muted">
+            <small>
+                <i class="bi bi-calendar-event"></i> {{ post.reg_date|date:"F d, Y " }}| {{post.reg_date|date:"H:i"}} <i class="bi bi-clock"></i> 
+            </small>
+        </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <h2>Hozircha postlar mavjud emas</h2>
+    {% endif %}
+  </div>
+
+
+
+
+{% endblock content %}
+

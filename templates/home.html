@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Bosh sahifa{% endblock title %}
+
+{% block content %}
+
+        <style>
+            body {
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #f8f9fa;
+            }
+    
+            .center-div {
+                text-align: center;
+            }
+    
+            .circle-container {
+                display: flex;
+                align-items: center;
+            }
+    
+            .circle-image {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                overflow: hidden;
+                margin-right: 20px; /* Adjust spacing between image and text */
+            }
+    
+            .circle-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+    
+            .text-beside-image {
+                font-size: 24px; /* Adjust text size */
+                color: #333; /* Adjust text color */
+            }
+            
+            @media only screen and (max-width: 768px) {
+                .circle-container {
+                    flex-direction: column;
+                    align-items: center;
+                }
+            
+                .text-beside-image {
+                    margin: 20px 0;
+                    text-align: center;
+                }
+                #education{
+                    font-size: medium ;
+                }
+            }
+        </style>
+
+        <div class="container center-div">
+            <div class="circle-container">
+                <div class="circle-image">
+                    <img src="{% static "img/myphoto.jpg" %}" alt="Circle Image">
+                </div>
+                <div class="text-beside-image">
+                    <h2 class="title">Abdulazizov Ulug'bek</h2>
+                    <h4 class="text-muted text-left">Backend developer(Junior)</h4>
+                    <div class="flex align-items-left">
+                        <a href="https://github.com/abdulazizovv" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="https://twitter.com/abdulazizovvv" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://t.me/abdulazizovu" target="_blank"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <h2 class="text-left text-muted p-3" id="education">
+                Student at KIUF 3/4 <i class="fa-solid fa-graduation-cap"></i><br>
+                Student at Najot Ta'lim 7/8
+            </h2>
+            <a href="{% url "blog" %}"><button type="button" class="btn btn-primary">Blog</button></a>
+            <a href="{% url "about" %}"><button type="button" class="btn btn-outline-primary">About me</button></a>
+        </div>
+
+    {% endblock content %}
