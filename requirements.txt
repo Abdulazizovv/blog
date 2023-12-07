@@ -1,0 +1,5 @@
+Django
+django-environ==0.11.2
+djangorestframework==3.14.0
+Pillow
+whitenoise==2.0.6
